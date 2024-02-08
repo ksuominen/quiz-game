@@ -1,11 +1,13 @@
+import json
 
-quiz = {
-    "What is the capital of France?": "Paris",
-    "What is the largest planet in our solar system?": "Jupiter",
-    "What is the color of the sky on a clear day?": "Blue",
-    "What is the chemical symbol for water?": "H2O"
-}
-def kysely(quiz):
+
+def load_quiz(filename: str):
+    with open(filename) as json_file:
+        quiz = json.load(json_file)
+        return quiz
+
+
+def kysely(quiz: dict):
     correct_answers_count = 0
     for question, answer in quiz.items():
         user_answer = input(question + " ")
@@ -16,14 +18,19 @@ def kysely(quiz):
             print("Incorrect. The correct answer is:", answer)
     return correct_answers_count
 
+
 def start():
     while True:
         play = input("Do you want to start the game? (Y/N) ")
         if play.lower() == "y":
             print("Yay, let's play!")
-            # Show questions here and count the score
-            score = kysely(quiz) #change this
-            display_score(score)
+            try:
+                quiz = load_quiz("quiz1.json")
+            except:
+                print("Sorry, an error occured while loading the quiz")
+                break
+            score = kysely(quiz)
+            display_score(score, len(quiz))
             break
         elif play.lower() == "n":
             print("Thanks for playing!")
@@ -31,8 +38,10 @@ def start():
         else:
             print("Please write Y or N")
 
-def display_score(score: int):
-    print(f"Your final score was: {score}")
 
-if __name__=="__main__":
+def display_score(score: int, max_score: int):
+    print(f"Your final score was: {score}/{max_score}")
+
+
+if __name__ == "__main__":
     start()
