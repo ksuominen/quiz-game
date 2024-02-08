@@ -24,8 +24,18 @@ def start():
         play = input("Do you want to start the game? (Y/N) ")
         if play.lower() == "y":
             print("Yay, let's play!")
+            while True:
+                quiz_choice = input("What quiz do you want to play? (1/2) ")
+                if quiz_choice == "1":
+                    filename = "quiz1.json"
+                    break
+                elif quiz_choice == "2":
+                    filename = "quiz2.json"
+                    break
+                else:
+                    print("Incorrect input")
             try:
-                quiz = load_quiz("quiz1.json")
+                quiz = load_quiz(filename)
             except:
                 print("Sorry, an error occured while loading the quiz")
                 break
@@ -45,4 +55,3 @@ def display_score(score: int, max_score: int):
 
 if __name__ == "__main__":
     start()
-
