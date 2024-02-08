@@ -45,3 +45,4 @@ def display_score(score: int, max_score: int):
 
 if __name__ == "__main__":
     start()
+
